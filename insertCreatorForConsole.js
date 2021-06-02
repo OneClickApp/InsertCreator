@@ -88,6 +88,11 @@ select.getEntityCollection(function(result) {
 					if(valueType == "object" && typeof value.getMonth === 'function'){
 						value = "'" + value.toSQLOString() + "'";
 					}
+					
+					if(/[а-яА-ЯЁё]/.test(value))
+					{
+						value = "N" + value
+					}
 					insertStr += value + ",";
 				}
 			}
