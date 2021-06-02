@@ -1,5 +1,5 @@
-var tablename = "Case";
-var rowCount = 1000;
+var tablename = "Case"; //schema name
+var rowCount = 1000; // max rows to export
 
 function download(filename, text) {
 	var element = document.createElement('a');
