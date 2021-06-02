@@ -1,5 +1,5 @@
-var tablename = "Case"; //schema name
-var rowCount = 1000; // max rows to export
+var tablename = "Case";
+var rowCount = 1000;
 
 function download(filename, text) {
 	var element = document.createElement('a');
@@ -15,24 +15,24 @@ function download(filename, text) {
 }
 
 if (!Date.prototype.toSQLString) {
-    (function() {
+	(function() {
 
-        function pad(number) {
-            if (number < 10) {
-                return '0' + number;
-            }
-            return number;
-        }
+		function pad(number) {
+			if (number < 10) {
+				return '0' + number;
+			}
+			return number;
+		}
 
-        Date.prototype.toSQLOString = function() {
-            return this.getUTCFullYear() +
-                '-' + pad(this.getUTCMonth() + 1) +
-                '-' + pad(this.getUTCDate()) +
-                ' ' + pad(this.getUTCHours()) +
-                ':' + pad(this.getUTCMinutes()) +
-                ':' + pad(this.getUTCSeconds());
-        };
-    }());
+		Date.prototype.toSQLOString = function() {
+			return this.getUTCFullYear() +
+				'-' + pad(this.getUTCMonth() + 1) +
+				'-' + pad(this.getUTCDate()) +
+				' ' + pad(this.getUTCHours()) +
+				':' + pad(this.getUTCMinutes()) +
+				':' + pad(this.getUTCSeconds());
+		};
+	}());
 }
 var select = Ext.create("Terrasoft.EntitySchemaQuery", {
 	rootSchemaName: tablename
@@ -44,17 +44,17 @@ select.getEntityCollection(function(result) {
 		var script = "";
 		result.collection.each(function(item) {
 			
-            var insertStr = "INSERT INTO [" + tablename + "] ( ";
+			var insertStr = "INSERT INTO [" + tablename + "] ( ";
 			
 			for(var el in item.values) { 
-                var name = el;
-                var value = item.values[el]
-                if(value && value.value){ 
-                    value = value.value;
-                    if(name != "Id"){
-                        name += "Id";
-                    }
-                }
+				var name = el;
+				var value = item.values[el]
+				if(value && value.value){ 
+					value = value.value;
+					if(name != "Id"){
+						name += "Id";
+					}
+				}
 				if(value){
 					insertStr += "[" + name + "],";
 				}
@@ -64,13 +64,13 @@ select.getEntityCollection(function(result) {
 			insertStr += ")\r\nVALUES (";
 			
 			for(var el in item.values) {
-                var value = item.values[el];
+				var value = item.values[el];
 				
 				if(value && value.value){ 
-                    value = value.value;
-                }
+					value = value.value;
+				}
 				
-                var valueType = typeof value;
+				var valueType = typeof value;
 				
 				if(value){
 					switch (valueType) {
@@ -90,7 +90,7 @@ select.getEntityCollection(function(result) {
 					}
 					insertStr += value + ",";
 				}
-            }
+			}
 			insertStr = insertStr.slice(0, -1);
 			insertStr += ");\r\n\r\n";
 			script += insertStr; 
